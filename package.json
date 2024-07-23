@@ -1,0 +1,18 @@
+{
+  "name": "stockprice",
+  "version": "1.0.0",
+  "description": "stocks",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon polldata.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.1",
+    "nodemon": "^3.1.4"
+  }
+}
