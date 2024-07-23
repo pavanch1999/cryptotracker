@@ -29,4 +29,4 @@ const startPolling = async () => {
   }, 10000);
 };
 
-startPolling();
+export default startPolling;
