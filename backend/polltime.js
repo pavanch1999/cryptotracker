@@ -1,20 +1,17 @@
-import connectDB from "./config/db.js";
+
 import { fetchMultipleCoinsData } from "./fetchapi.js";
-import Stock from "./model/stockModel.js";
-import mongoose from "mongoose";
+import Stock from "../model/stockModel.js";
 
 const insertCryptoData = async () => {
   try {
     const apiData = await fetchMultipleCoinsData();
-    const cryptos = apiData.map(data => {
-      const [name, price] = data.split(' ');
-      return {
-        name,
-        price: parseFloat(price)
-      };
+    await Stock.create({
+      btcprice:apiData[0] ,
+      dogeprice: apiData[1],
+      ethprice: apiData[2],
+      shibprice: apiData[3],
+      solprice: apiData[4],
     });
-
-    await Stock.insertMany(cryptos);
     console.log('Data inserted successfully');
   } catch (error) {
     console.error('Error inserting data:', error);
@@ -22,11 +19,11 @@ const insertCryptoData = async () => {
 };
 
 const startPolling = async () => {
-  await connectDB();
+  // await connectDB();
 
   setInterval(async () => {
     await insertCryptoData();
-  }, 10000);
+  }, 5000);
 };
 
 export default startPolling;

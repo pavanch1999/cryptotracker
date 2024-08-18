@@ -2,16 +2,20 @@
 
 async function fetchCoinData(coinCode) {
     try {
-      const response = await fetch("https://api.livecoinwatch.com/coins/single", {
+      const response = await fetch(new Request("https://api.livecoinwatch.com/coins/map"), {
         method: "POST",
-        headers: {
+        headers: new Headers({
           "content-type": "application/json",
-          "x-api-key": "31045115-8cd2-4783-b65a-9e2137012015",
-        },
+          "x-api-key": "cf6803f0-4b31-4698-99b4-4b2153a61b23",
+        }),
         body: JSON.stringify({
+          codes: ["ETH","BTC","SOL","DOGE","SHIB"],
           currency: "USD",
-          code: coinCode,
-          meta: true,
+          sort: "code",
+          order: "ascending",
+          offset: 0,
+          limit: 0,
+          meta: false,
         }),
       });
   
@@ -20,8 +24,8 @@ async function fetchCoinData(coinCode) {
       }
   
       const data = await response.json();
-      const ans=data.name +" "+ data.rate
-    
+      const ans=data.map(c=>c.rate);
+    // console.log(ans);
     return (ans); // Return the response data
     } catch (error) {
       console.error(`Error fetching data for ${coinCode}:`, error);
@@ -31,11 +35,11 @@ async function fetchCoinData(coinCode) {
   
   async function fetchMultipleCoinsData() {
     try {
-        const coinCodes=["ETH","BTC","SOL","DOGE","SHIB"];
-      const fetchPromises = coinCodes.map(code => fetchCoinData(code));
-      const results = await Promise.all(fetchPromises);
-      console.log(results);
-      return results
+        
+      const fetchPromises = await fetchCoinData();
+      
+      // console.log(fetchPromises);
+      return fetchPromises
     } catch (error) {
       console.error('Error fetching multiple coins data:', error);
       throw error; // Re-throw the error to handle it in the calling code

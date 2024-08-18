@@ -6,14 +6,26 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const stockSchema = new Schema({
-  name: {
+  btcprice: {
     type: String,
     required: true
   },
-  price: {
+  dogeprice: {
     type: String,
     required: true
-  }
+  },
+  ethprice: {
+    type: String,
+    required: true
+  },
+  shibprice: {
+    type: String,
+    required: true
+  },
+  solprice: {
+    type: String,
+    required: true
+  },
 },{
     timestamps:true,
 });
